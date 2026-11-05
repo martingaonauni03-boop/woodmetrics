@@ -109,7 +109,7 @@ Se prueban renderizado de módulos, CRUD, permisos, CSRF, dimensiones inválidas
 
 ## Despliegue y video
 
-Consulta [DESPLIEGUE.md](docs/DESPLIEGUE.md) y [GUION_VIDEO.md](docs/GUION_VIDEO.md). No subas bases de datos, claves, `.env` o credenciales al repositorio. `.gitignore` excluye esos archivos.
+Para publicar sin contratar Render, consulta [PYTHONANYWHERE.md](docs/PYTHONANYWHERE.md). También están disponibles [DESPLIEGUE.md](docs/DESPLIEGUE.md) (Render/Docker) y [GUION_VIDEO.md](docs/GUION_VIDEO.md). No subas bases de datos, claves, `.env` o credenciales al repositorio. `.gitignore` excluye esos archivos.
 
 Para producción configura una `SECRET_KEY` estable y aleatoria, HTTPS y `COOKIE_SECURE=1`. Usa un proceso WSGI; no el servidor de desarrollo de Flask. El Dockerfile escucha en 8000 y requiere montar un volumen en `/data`. Render usa su variable `$PORT` y disco en `/var/data`.
 
