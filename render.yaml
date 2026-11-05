@@ -1,0 +1,23 @@
+# Este blueprint usa un servicio de pago y disco persistente.
+# No desplegar sin revisar el coste en Render.
+services:
+  - type: web
+    name: woodmetrics
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 wsgi:app
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: SECRET_KEY
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "1"
+      - key: DATABASE_PATH
+        value: /var/data/woodmetrics.sqlite
+    disk:
+      name: woodmetrics-data
+      mountPath: /var/data
+      sizeGB: 1

@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<section class="panel empty"><span class="eyebrow">{{ error.code }}</span><h1>{{ 'Acceso no permitido' if error.code==403 else 'No se pudo completar la solicitud' }}</h1><p>{{ error.description }}</p><a class="button" href="{{ url_for('web.dashboard') }}">Volver al inicio</a></section>{% endblock %}
