@@ -2,6 +2,8 @@
 
 Administración del sistema de planificación de cortes de tableros.
 
+Aplicación: https://marting003.pythonanywhere.com/
+
 ## Tecnologías
 
 Python 3.12, Flask, SQLite, HTML, CSS, JavaScript y Jinja2.
