@@ -1,1 +1,39 @@
-{% extends 'base.html' %}{% block content %}<div class="heading"><div><span class="eyebrow">TU TALLER, EN ORDEN</span><h1>Vista general</h1><p class="muted">Todo listo para preparar el siguiente corte.</p></div><a class="button" href="{{ url_for('web.edit',entity='orders') }}">+ Nuevo pedido</a></div><div class="metrics">{% for key,label in [('orders','Pedidos registrados'),('clients','Clientes'),('board_types','Tipos de tablero'),('formats','Formatos disponibles')] %}<a class="metric" href="{{ url_for('web.listing',entity=key) if g.user.role=='admin' or key not in admin_only else '#' }}"><span>{{ label }}</span><strong>{{ counts[key] }}</strong><small>{{ 'Preparación del Core' if key=='orders' else 'Catálogo del taller' }} <span>↗</span></small></a>{% endfor %}</div><div class="dashboard-grid"><section class="panel"><div class="panel-title"><h2>Últimos pedidos</h2><a href="{{ url_for('web.listing',entity='orders') }}">Ver todos →</a></div>{% if recent %}<div class="table-wrap"><table><thead><tr><th>Pedido / cliente</th><th>Estado</th><th>Versión</th></tr></thead><tbody>{% for o in recent %}<tr><td><strong>{{ o.name }}</strong><small>{{ o.client }}</small></td><td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td><td>v{{ o.version }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty">Todavía no hay pedidos. Crea el primero para comenzar.</div>{% endif %}</section><section class="core-card"><span class="eyebrow">DATOS QUE ALIMENTAN EL CORE</span><h2>Del tablero<br>a la pieza.</h2><p>Organiza materiales y formatos, define la sierra y registra las piezas de cada pedido.</p><div class="core-steps"><span>01 · Catálogos</span><span>02 · Configuración</span><span>03 · Pedidos y piezas</span></div><small>Esta entrega prepara datos. El cálculo de planes de corte pertenece a la siguiente etapa.</small></section></div><section class="panel info-panel"><span class="info-symbol">✓</span><div><h3>La calidad comienza antes de guardar</h3><p>El servidor valida las dimensiones, las relaciones y la compatibilidad de las piezas con los formatos disponibles.</p></div></section>{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<div class="heading">
+  <h1>Administración</h1>
+  <a class="button" href="{{ url_for('web.edit',entity='orders') }}">+ Nuevo pedido</a>
+</div>
+<div class="metrics">
+  {% for key,label in [('orders','Pedidos'),('clients','Clientes'),('board_types','Tipos de tablero'),('formats','Formatos')] %}
+  <a class="metric" href="{{ url_for('web.listing',entity=key) if g.user.role=='admin' or key not in admin_only else '#' }}">
+    <span>{{ label }}</span>
+    <strong>{{ counts[key] }}</strong>
+  </a>
+  {% endfor %}
+</div>
+<section class="panel">
+  <div class="panel-title">
+    <h2>Últimos pedidos</h2>
+    <a href="{{ url_for('web.listing',entity='orders') }}">Ver todos</a>
+  </div>
+  {% if recent %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Pedido / cliente</th><th>Estado</th><th>Versión</th></tr></thead>
+      <tbody>
+        {% for o in recent %}
+        <tr>
+          <td><strong>{{ o.name }}</strong><small>{{ o.client }}</small></td>
+          <td><span class="badge {{ o.status|lower }}">{{ o.status }}</span></td>
+          <td>v{{ o.version }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty">No hay pedidos registrados.</div>
+  {% endif %}
+</section>
+{% endblock %}
